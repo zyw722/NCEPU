@@ -1,0 +1,22 @@
+<launch_ros>
+    <arg name="rviz" value="true"/>
+
+    <ros2param command="load" file="$(find fast_lio)/config/avia.yaml"/>
+
+    <param name="feature_extract_enable" type="bool" value="false"/>
+    <param name="point_filter_num" type="int" value="3"/>
+    <param name="max_iteration" type="int" value="3"/>
+    <param name="filter_size_surf" type="double" value="0.5"/>
+    <param name="filter_size_map" type="double" value="0.5"/>
+    <param name="cube_side_length" type="double" value="1000"/>
+    <param name="runtime_pos_log_enable" type="bool" value="false"/>
+
+    <executable cmd="fastlio_localization" pkg="fast_lio" output="screen">
+        <env name="RCUTILS_CONSOLE_STDOUT_LINE_BUFFERED" value="1"/>
+    </executable>
+
+    <group if="$(arg rviz)">
+        <executable cmd="rviz2" pkg="rviz2" output="screen" args="-d $(find fast_lio)/rviz_cfg/localization.rviz"/>
+    </group>
+</launch_ros>
+
